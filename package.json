@@ -1,0 +1,29 @@
+{
+  "name": "cordova-plugin-secure-preferences",
+  "version": "1.1.0",
+  "description": "A Cordova plugin as wrapper for Secure Preferences",
+  "cordova": {
+    "id": "cordova-plugin-secure-preferences",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova",
+    "cordova-android",
+    "storage",
+    "secure",
+    "shared",
+    "preferences",
+    "safe"
+  ],
+  "author": "HansKrywaa",
+  "license": "Apache 2.0",
+  "main": "./src/ionic/index.js",
+  "types": "./src/ionic/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/HansKrywaa/cordova-plugin-secure-preferences/issues"
+  },
+  "homepage": "https://github.com/HansKrywaa/cordova-plugin-secure-preferences"
+}

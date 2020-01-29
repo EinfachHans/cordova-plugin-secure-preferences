@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="cordova-plugin-secure-preferences"
+	version="1.1.0">
+	<name>Secure Preferences</name>
+	<description>A Cordova plugin as wrapper for Secure Preferences</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,plugin,secure,shared,preferences</keywords>
+
+	<engines>
+        <engine name="cordova" version=">=7.1.0"/>
+        <engine name="cordova-android" version=">=6.3.0"/>
+    </engines>
+	
+	<js-module src="www/SecurePreferencesServices.js" name="SecurePreferencesServices">
+		<clobbers target="window.SecurePreferencesServices" />
+	</js-module>
+
+	<!-- android -->
+	<platform name="android">
+		<!-- Add plugin dependencies -->
+		<framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="SecurePreferencesServices" >
+				<param name="android-package" value="de.hanskrywaa.SecurePreferencesServices"/>
+			</feature>
+		</config-file>
+		<source-file src="src/android/SecurePreferencesServices.java" target-dir="de/hanskrywaa" />
+	</platform>
+
+</plugin>
