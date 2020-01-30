@@ -8,6 +8,14 @@ exports.getString = function (password, sharedPrefFilename, key, resultCallback,
     [password, sharedPrefFilename, key]);
 };
 
+exports.remove = function (password, sharedPrefFilename, key, resultCallback, errorCallback) {
+
+  exec(resultCallback, errorCallback,
+    "SecurePreferencesServices",
+    "remove",
+    [password, sharedPrefFilename, key]);
+};
+
 
 
 

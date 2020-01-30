@@ -9,6 +9,12 @@ var SecurePreferencesServices = /** @class */ (function () {
     var plu = plugin();
     return plu.getString.apply(plu, arguments);
   };
+
+  SecurePreferencesServices.remove = function (password, sharedPrefFilename, key, success, failure) {
+    var plu = plugin();
+    return plu.remove.apply(plu, arguments);
+  };
+
   return SecurePreferencesServices;
 }());
 export default SecurePreferencesServices;

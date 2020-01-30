@@ -13,9 +13,20 @@ This Plugin only works for Android
 
 ## Usage
 
+### GetString
 ```
-SecurePreferences.read('key',
+SecurePreferences.getString('password', 'sharedPrefFilename', 'key',
     function(succes) {
+        // success
+    }, funtion(error) {
+        // error
+    });
+```
+
+### Remove
+```
+SecurePreferences.remove('password', 'sharedPrefFilename', 'key',
+    function() {
         // success
     }, funtion(error) {
         // error

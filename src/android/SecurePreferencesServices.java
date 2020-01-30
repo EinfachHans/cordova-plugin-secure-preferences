@@ -2,18 +2,20 @@ package de.hanskrywaa;
 
 import android.content.Context;
 import android.util.Log;
+import com.securepreferences.SecurePreferences;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
-import com.securepreferences.SecurePreferences;
 
 public class SecurePreferencesServices extends CordovaPlugin {
 
     private static final String TAG = "SecurePreferencesServices";
+
     private static final String ACTION_GET_STRING = "getString";
+    private static final String ACTION_REMOVE = "remove";
     private Context context;
 
     public SecurePreferencesServices() {
@@ -67,7 +69,6 @@ public class SecurePreferencesServices extends CordovaPlugin {
         SecurePreferences sp = new SecurePreferences(this.cordova.getActivity().getApplicationContext(), password, sharedPrefFilename);
 
         if (action.equalsIgnoreCase(ACTION_GET_STRING)) {
-
             String key = args.getString(2);
 
             if (key == null || key.equals("null")) {
@@ -85,7 +86,20 @@ public class SecurePreferencesServices extends CordovaPlugin {
                 callbackContext.error(ex.getMessage());
             }
             return true;
+        } else if (action.equalsIgnoreCase(ACTION_REMOVE)) {
+            String key = args.getString(2);
+
+            if (key == null || key.equals("null")) {
+                callbackContext.error("The Key is required");
+                return true;
+            }
+
+            try {
+                sp.edit().remove(key);
+                callbackContext.success();
+            } catch (Exception ex) {
+                callbackContext.error(ex.getMessage());
+            }
+            return false;
         }
-        return false;
     }
-}
