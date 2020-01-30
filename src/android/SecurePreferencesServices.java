@@ -100,7 +100,8 @@ public class SecurePreferencesServices extends CordovaPlugin {
             } catch (Exception ex) {
                 callbackContext.error(ex.getMessage());
             }
-            return false;
+            return true;
         }
+        return false;
     }
 }
