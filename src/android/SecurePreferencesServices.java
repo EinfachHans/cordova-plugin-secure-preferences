@@ -103,3 +103,4 @@ public class SecurePreferencesServices extends CordovaPlugin {
             return false;
         }
     }
+}
