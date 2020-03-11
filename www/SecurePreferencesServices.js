@@ -1,19 +1,35 @@
 var exec = cordova.require('cordova/exec');
 
-exports.getString = function (password, sharedPrefFilename, key, resultCallback, errorCallback) {
+exports.init = function (password, sharedPrefFilename, resultCallback) {
+
+  exec(resultCallback, null,
+    "SecurePreferencesServices",
+    "init",
+    [password, sharedPrefFilename]);
+};
+
+exports.getString = function (key, resultCallback, errorCallback) {
 
   exec(resultCallback, errorCallback,
     "SecurePreferencesServices",
     "getString",
-    [password, sharedPrefFilename, key]);
+    [key]);
 };
 
-exports.remove = function (password, sharedPrefFilename, key, resultCallback, errorCallback) {
+exports.putString = function (key, value, resultCallback, errorCallback) {
+
+  exec(resultCallback, errorCallback,
+    "SecurePreferencesServices",
+    "putString",
+    [key, value]);
+};
+
+exports.remove = function (key, resultCallback, errorCallback) {
 
   exec(resultCallback, errorCallback,
     "SecurePreferencesServices",
     "remove",
-    [password, sharedPrefFilename, key]);
+    [key]);
 };
 
 

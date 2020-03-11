@@ -5,12 +5,22 @@ var SecurePreferencesServices = /** @class */ (function () {
   function SecurePreferencesServices() {
   }
 
-  SecurePreferencesServices.getString = function (password, sharedPrefFilename, key, success, failure) {
+  SecurePreferencesServices.init = function (password, sharedPrefFilename, success) {
+    var plu = plugin();
+    return plu.init.apply(plu, arguments);
+  };
+
+  SecurePreferencesServices.getString = function (key, success, failure) {
     var plu = plugin();
     return plu.getString.apply(plu, arguments);
   };
 
-  SecurePreferencesServices.remove = function (password, sharedPrefFilename, key, success, failure) {
+  SecurePreferencesServices.putString = function (key, value, success, failure) {
+    var plu = plugin();
+    return plu.putString.apply(plu, arguments);
+  };
+
+  SecurePreferencesServices.remove = function (key, success, failure) {
     var plu = plugin();
     return plu.remove.apply(plu, arguments);
   };

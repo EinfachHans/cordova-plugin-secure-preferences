@@ -14,8 +14,11 @@ public class SecurePreferencesServices extends CordovaPlugin {
 
     private static final String TAG = "SecurePreferencesServices";
 
+    private static final String ACTION_INIT = "init";
     private static final String ACTION_GET_STRING = "getString";
+    private static final String ACTION_PUT_STRING = "putString";
     private static final String ACTION_REMOVE = "remove";
+    private SecurePreferences sp;
     private Context context;
 
     public SecurePreferencesServices() {
@@ -53,23 +56,31 @@ public class SecurePreferencesServices extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "ACTION: " + action);
-        String password = args.getString(0);
-        String sharedPrefFilename = args.getString(1);
 
-        if (password == null || password.equals("null")) {
-            callbackContext.error("The Password is required");
-            return true;
+        if(action.equalsIgnoreCase(ACTION_INIT)) {
+
+            String password = args.getString(0);
+            String sharedPrefFilename = args.getString(1);
+
+            if (password == null || password.equals("null")) {
+                callbackContext.error("The Password is required");
+                return true;
+            }
+
+            if (sharedPrefFilename == null || sharedPrefFilename.equals("null")) {
+                callbackContext.error("The sharedPrefFilename is required");
+                return true;
+            }
+
+            this.sp = new SecurePreferences(this.cordova.getActivity().getApplicationContext(), password, sharedPrefFilename);
+            callbackContext.success();
+
+        } else if(this.sp == null) {
+            callbackContext.error("The Secured Preferences must be initialized first!");
         }
-
-        if (sharedPrefFilename == null || sharedPrefFilename.equals("null")) {
-            callbackContext.error("The sharedPrefFilename is required");
-            return true;
-        }
-
-        SecurePreferences sp = new SecurePreferences(this.cordova.getActivity().getApplicationContext(), password, sharedPrefFilename);
 
         if (action.equalsIgnoreCase(ACTION_GET_STRING)) {
-            String key = args.getString(2);
+            String key = args.getString(0);
 
             if (key == null || key.equals("null")) {
                 callbackContext.error("The Key is required");
@@ -86,8 +97,9 @@ public class SecurePreferencesServices extends CordovaPlugin {
                 callbackContext.error(ex.getMessage());
             }
             return true;
-        } else if (action.equalsIgnoreCase(ACTION_REMOVE)) {
-            String key = args.getString(2);
+        } else if(action.equalsIgnoreCase(ACTION_PUT_STRING)) {
+            String key = args.getString(0);
+            String value = args.getString(1);
 
             if (key == null || key.equals("null")) {
                 callbackContext.error("The Key is required");
@@ -95,7 +107,22 @@ public class SecurePreferencesServices extends CordovaPlugin {
             }
 
             try {
-                sp.edit().remove(key);
+                sp.edit().putString(key, value).commit();
+                callbackContext.success();
+            } catch (Exception ex) {
+                callbackContext.error(ex.getMessage());
+            }
+            return true;
+        } else if (action.equalsIgnoreCase(ACTION_REMOVE)) {
+            String key = args.getString(0);
+
+            if (key == null || key.equals("null")) {
+                callbackContext.error("The Key is required");
+                return true;
+            }
+
+            try {
+                sp.edit().remove(key).commit();
                 callbackContext.success();
             } catch (Exception ex) {
                 callbackContext.error(ex.getMessage());
