@@ -1,8 +1,11 @@
-package de.hanskrywaa;
+package de.hanskrywaa.SecurePreferences;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
+
 import com.securepreferences.SecurePreferences;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -14,7 +17,6 @@ public class SecurePreferencesServices extends CordovaPlugin {
 
     private static final String TAG = "SecurePreferencesServices";
 
-    private static final String ACTION_INIT = "init";
     private static final String ACTION_GET_STRING = "getString";
     private static final String ACTION_PUT_STRING = "putString";
     private static final String ACTION_REMOVE = "remove";
@@ -34,9 +36,35 @@ public class SecurePreferencesServices extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        Log.d(TAG, "Initalized");
         this.context = this.cordova.getActivity().getApplicationContext();
-        Log.d(TAG, context.toString());
+        Resources res = this.context.getResources();
+
+        int sharedPrefFilenameId = res.getIdentifier("sp_file_name", "string", this.context.getPackageName());
+        int passwordId = res.getIdentifier("sp_password", "string", this.context.getPackageName());
+
+        String sharedPrefFilename = res.getString(sharedPrefFilenameId);
+        String password = res.getString(passwordId);
+
+        if (this.init(sharedPrefFilename, password)) {
+            Log.d(TAG, "Initialized");
+        } else {
+            Log.d(TAG, "Failed to initialized");
+        }
+    }
+
+    private boolean init(String sharedPrefFilename, String password) {
+        if (password == null || password.equals("null")) {
+            Log.d(TAG, "Please provide a Password in the Plugins Variable");
+            return false;
+        }
+
+        if (sharedPrefFilename == null || sharedPrefFilename.equals("null")) {
+            Log.d(TAG, "Please provide the sharedPrefFilename in the Plugins Variable");
+            return false;
+        }
+
+        this.sp = new SecurePreferences(this.cordova.getActivity().getApplicationContext(), password, sharedPrefFilename);
+        return true;
     }
 
     /**
@@ -57,26 +85,9 @@ public class SecurePreferencesServices extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d(TAG, "ACTION: " + action);
 
-        if(action.equalsIgnoreCase(ACTION_INIT)) {
-
-            String password = args.getString(0);
-            String sharedPrefFilename = args.getString(1);
-
-            if (password == null || password.equals("null")) {
-                callbackContext.error("The Password is required");
-                return true;
-            }
-
-            if (sharedPrefFilename == null || sharedPrefFilename.equals("null")) {
-                callbackContext.error("The sharedPrefFilename is required");
-                return true;
-            }
-
-            this.sp = new SecurePreferences(this.cordova.getActivity().getApplicationContext(), password, sharedPrefFilename);
-            callbackContext.success();
-
-        } else if(this.sp == null) {
-            callbackContext.error("The Secured Preferences must be initialized first!");
+        if (this.sp == null) {
+            callbackContext.error("The Secured Preferences was not initialized!");
+            return false;
         }
 
         if (action.equalsIgnoreCase(ACTION_GET_STRING)) {
@@ -97,7 +108,7 @@ public class SecurePreferencesServices extends CordovaPlugin {
                 callbackContext.error(ex.getMessage());
             }
             return true;
-        } else if(action.equalsIgnoreCase(ACTION_PUT_STRING)) {
+        } else if (action.equalsIgnoreCase(ACTION_PUT_STRING)) {
             String key = args.getString(0);
             String value = args.getString(1);
 

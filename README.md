@@ -11,11 +11,30 @@ This Plugin only works for Android
 - cordova >= 7.1.0
 - cordova-android >= 6.3.0
 
+## Installation
+
+### Variables
+
+- FILE_NAME (The SharedPref File Name)
+- Password (The Password of the File)
+
+`cordova plugin add cordova-plugin-secure-preferences --variable FILE_NAME=filename --variable PASSWORD=password`
+
 ## Usage
 
 ### GetString
 ```
-SecurePreferences.getString('password', 'sharedPrefFilename', 'key',
+SecurePreferences.getString('key',
+    function(succes) {
+        // success
+    }, funtion(error) {
+        // error
+    });
+```
+
+### PutString
+```
+SecurePreferences.putString('key', 'value',
     function(succes) {
         // success
     }, funtion(error) {
@@ -25,7 +44,7 @@ SecurePreferences.getString('password', 'sharedPrefFilename', 'key',
 
 ### Remove
 ```
-SecurePreferences.remove('password', 'sharedPrefFilename', 'key',
+SecurePreferences.remove('key',
     function() {
         // success
     }, funtion(error) {

@@ -5,11 +5,6 @@ var SecurePreferencesServices = /** @class */ (function () {
   function SecurePreferencesServices() {
   }
 
-  SecurePreferencesServices.init = function (password, sharedPrefFilename, success) {
-    var plu = plugin();
-    return plu.init.apply(plu, arguments);
-  };
-
   SecurePreferencesServices.getString = function (key, success, failure) {
     var plu = plugin();
     return plu.getString.apply(plu, arguments);
