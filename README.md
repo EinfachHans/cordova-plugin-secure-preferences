@@ -1,4 +1,4 @@
-# cordova-plugin-secure-preferences
+# cordova-plugin-secure-preferences [![npm version](https://badge.fury.io/js/cordova-plugin-secure-preferences.svg)](https://badge.fury.io/js/cordova-plugin-secure-preferences)
 
 This Plugin is a Wrapper for [Secure Preferences](https://github.com/scottyab/secure-preferences).
 
