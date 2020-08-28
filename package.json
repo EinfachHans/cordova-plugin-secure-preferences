@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-secure-preferences",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A Cordova plugin as wrapper for Secure Preferences",
   "cordova": {
     "id": "cordova-plugin-secure-preferences",
