@@ -1,4 +1,4 @@
-package de.hanskrywaa.SecurePreferences;
+package de.einfachhans.SecurePreferences;
 
 import android.content.Context;
 import android.content.res.Resources;

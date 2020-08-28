@@ -18,12 +18,12 @@
     "preferences",
     "safe"
   ],
-  "author": "HansKrywaa",
+  "author": "EinfachHans",
   "license": "Apache 2.0",
   "main": "./src/ionic/index.js",
   "types": "./src/ionic/index.d.ts",
   "bugs": {
-    "url": "https://github.com/HansKrywaa/cordova-plugin-secure-preferences/issues"
+    "url": "https://github.com/EinfachHans/cordova-plugin-secure-preferences/issues"
   },
-  "homepage": "https://github.com/HansKrywaa/cordova-plugin-secure-preferences"
+  "homepage": "https://github.com/EinfachHans/cordova-plugin-secure-preferences"
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.1
+- I changed by Github Username --> Adjust Links and Android Package Name
+
 ## 1.4.0
 - Breaking: Removed init() Method and init over Variables
 - Uninstall Plugin: `cordova plugin remove cordova-plugin-secure-preferences`
